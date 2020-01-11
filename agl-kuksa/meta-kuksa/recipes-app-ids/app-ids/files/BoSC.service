@@ -1,0 +1,14 @@
+[Unit]
+Description = Service to perform the Bags of System Calls approach on intrusion detection 
+ConditionPathExists = /usr/bin/app-ids/src/
+Requires = mosquitto.service stide_syscall_formatter.service syscall_tracer.service stide.service
+After = mosquitto.service
+Before = stide_syscall_formatter.service syscall_tracer.service stide.service
+ 
+[Service]
+Type=simple
+WorkingDirectory=/usr/bin/app-ids/src
+ExecStart =/usr/bin/python3 /usr/bin/app-ids/src/BoSC.py
+
+[Install]
+WantedBy = multi-user.target

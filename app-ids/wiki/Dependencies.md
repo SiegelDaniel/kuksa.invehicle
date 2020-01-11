@@ -1,7 +1,5 @@
 # Dependencies
-App-IDS is tested on Ubuntu 16.04 x64 and Automotive Grade Linux (AGL) on Raspberry Pi 3. 
-
-However, it should work on any debian-based Linux distribution that provides the following dependencies.
+App-IDS is tested on Ubuntu 16.04 x64 and Automotive Grade Linux (AGL) on Raspberry Pi 3. However, it should work on any debian-based Linux distribution that provides the following dependencies.
 
 - python 3.5
 - [strace](https://strace.io/)

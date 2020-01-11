@@ -1,5 +1,6 @@
 # The config.xml
 
+<<<<<<< HEAD
 As depicted in our architecture overview below, the config.xml is the central point to store configuration options for the App-IDS modules. If you want to deploy the modules in a distributed manner, you have to ensure that there a exists a version of config.xml on each device/system. More on this can be found under [Known Limitations and Next Steps](Limitations.md).
 
 ![App-IDS Architecture Overview](figures/App-IDS_Architecture_BlockDiagram.jpg)
