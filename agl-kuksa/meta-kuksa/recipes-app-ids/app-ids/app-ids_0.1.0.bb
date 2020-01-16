@@ -28,17 +28,16 @@ RDEPENDS_${PN} = "\
 		  python3-psutil \
 		  sqlite \
 		  mosquitto \
-		  strace \
-      python3-influxdb 
-      "
+		  strace"
+#      		  python3-influxdb"
 
 SRC_URI = "\
-	   git://github.com/SiegelDaniel/MQTT-IDS-INFLUX.git;protocol=https \
+	   git://github.com/SiegelDaniel/kuksa.invehicle.git;protocol=https \
 	   file://syscall_tracer.service \
 	   file://stide_syscall_formatter.service \
 	   file://stide.service \
-     file://bosc.service \
-     file://influx_adapter.service"
+           file://BoSC.service \
+           file://influx_adapter.service"
 
  
 SRC_URI[sha256sum] = "dd91a39785fba3129517c44522145afc00a89bce5e2e10f49893637a8e817a29"
@@ -47,12 +46,15 @@ SRC_URI[sha256sum] = "dd91a39785fba3129517c44522145afc00a89bce5e2e10f49893637a8e
 #Remove this for release builds.
 PV = "0.1.0+git${SRCPV}"
 
-S = "${WORKDIR}/git"
+S = "${WORKDIR}/git/app-ids"
 
 do_install () {
-  install -d ${D}${bindir}/app-ids
 
+  #create directories
+  install -d ${D}${bindir}/app-ids
   install -d ${D}${bindir}/app-ids/src
+
+  #install python scripts
   install -m 0644 ${S}/src/syscall_tracer.py ${D}${bindir}/app-ids/src
   install -m 0644 ${S}/src/stide_syscall_formatter.py ${D}${bindir}/app-ids/src
   install -m 0644 ${S}/src/stide.py ${D}${bindir}/app-ids/src
@@ -60,14 +62,12 @@ do_install () {
   install -m 0644 ${S}/src/influx_adapter.py ${D}${bindir}/app-ids/src
   install -m 0644 ${S}/src/create_LUT.py ${D}${bindir}/app-ids/src
   
-
-  
-  #install service files in order for the services to run
+  #install systemd unit files
   install -d ${D}${systemd_system_unitdir}
   install -m 0644 ${WORKDIR}/syscall_tracer.service ${D}${systemd_system_unitdir}
   install -m 0644 ${WORKDIR}/stide_syscall_formatter.service ${D}${systemd_system_unitdir}
   install -m 0644 ${WORKDIR}/stide.service ${D}${systemd_system_unitdir}
-  install -m 0644 ${WORKDIR}/bosc.service ${D}${systemd_system_unitdir}
+  install -m 0644 ${WORKDIR}/BoSC.service ${D}${systemd_system_unitdir}
   install -m 0644 ${WORKDIR}/influx_adapter.service ${D}${systemd_system_unitdir}
 }
 
@@ -75,7 +75,7 @@ SYSTEMD_SERVICE_${PN} = "\
 			syscall_tracer.service \
 			stide_syscall_formatter.service \
 			stide.service \
-      bosc.service \
-      influx_adapter.service"
+      			BoSC.service \
+      			influx_adapter.service"
 
 SYSTEMD_AUTO_ENABLE_${PN} = "disable"
