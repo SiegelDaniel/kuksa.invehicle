@@ -28,8 +28,8 @@ RDEPENDS_${PN} = "\
 		  python3-psutil \
 		  sqlite \
 		  mosquitto \
-		  strace"
-#      		  python3-influxdb"
+		  strace \
+      		  python3-influxdb"
 
 SRC_URI = "\
 	   git://github.com/SiegelDaniel/kuksa.invehicle.git;protocol=https \
