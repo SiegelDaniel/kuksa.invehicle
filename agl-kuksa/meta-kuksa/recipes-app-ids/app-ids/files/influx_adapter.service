@@ -2,8 +2,7 @@
 Description = Adapter to fill the influx database with data from STIDE and BoSC
 ConditionPathExists = /usr/bin/app-ids/src/
 Requires = mosquitto.service stide_syscall_formatter.service syscall_tracer.service stide.service
-After = mosquitto.service stide.service syscall_tracer.service
-Before = stide_syscall_formatter.service syscall_tracer.service BoSC.py
+Before = stide_syscall_formatter.service syscall_tracer.service BoSC.service stide.service
  
 [Service]
 Type=simple

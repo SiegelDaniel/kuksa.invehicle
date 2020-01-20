@@ -3,7 +3,7 @@ Description = Service to perform the Bags of System Calls approach on intrusion 
 ConditionPathExists = /usr/bin/app-ids/src/
 Requires = mosquitto.service stide_syscall_formatter.service syscall_tracer.service stide.service
 After = mosquitto.service
-Before = stide_syscall_formatter.service syscall_tracer.service stide.service
+Before = stide_syscall_formatter.service syscall_tracer.service
  
 [Service]
 Type=simple
