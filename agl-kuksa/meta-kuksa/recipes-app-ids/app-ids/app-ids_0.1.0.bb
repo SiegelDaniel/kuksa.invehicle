@@ -61,6 +61,7 @@ do_install () {
   install -m 0644 ${S}/src/BoSC.py ${D}${bindir}/app-ids/src
   install -m 0644 ${S}/src/influx_adapter.py ${D}${bindir}/app-ids/src
   install -m 0644 ${S}/src/create_LUT.py ${D}${bindir}/app-ids/src
+  install -m 0644 ${S}/src/config_handler.py ${D}${bindir}/app-ids/src
   
   #install systemd unit files
   install -d ${D}${systemd_system_unitdir}
