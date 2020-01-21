@@ -36,7 +36,7 @@ SRC_URI = "\
 	   file://syscall_tracer.service \
 	   file://stide_syscall_formatter.service \
 	   file://stide.service \
-           file://BoSC.service \
+           file://bosc.service \
            file://influx_adapter.service"
 
  
@@ -58,17 +58,18 @@ do_install () {
   install -m 0644 ${S}/src/syscall_tracer.py ${D}${bindir}/app-ids/src
   install -m 0644 ${S}/src/stide_syscall_formatter.py ${D}${bindir}/app-ids/src
   install -m 0644 ${S}/src/stide.py ${D}${bindir}/app-ids/src
-  install -m 0644 ${S}/src/BoSC.py ${D}${bindir}/app-ids/src
+  install -m 0644 ${S}/src/bosc.py ${D}${bindir}/app-ids/src
   install -m 0644 ${S}/src/influx_adapter.py ${D}${bindir}/app-ids/src
   install -m 0644 ${S}/src/create_LUT.py ${D}${bindir}/app-ids/src
   install -m 0644 ${S}/src/config_handler.py ${D}${bindir}/app-ids/src
+  install -m 0644 ${S}/src/dummyconfig.json ${D}${bindir}/app-ids/src
   
   #install systemd unit files
   install -d ${D}${systemd_system_unitdir}
   install -m 0644 ${WORKDIR}/syscall_tracer.service ${D}${systemd_system_unitdir}
   install -m 0644 ${WORKDIR}/stide_syscall_formatter.service ${D}${systemd_system_unitdir}
   install -m 0644 ${WORKDIR}/stide.service ${D}${systemd_system_unitdir}
-  install -m 0644 ${WORKDIR}/BoSC.service ${D}${systemd_system_unitdir}
+  install -m 0644 ${WORKDIR}/bosc.service ${D}${systemd_system_unitdir}
   install -m 0644 ${WORKDIR}/influx_adapter.service ${D}${systemd_system_unitdir}
 }
 
@@ -76,7 +77,7 @@ SYSTEMD_SERVICE_${PN} = "\
 			syscall_tracer.service \
 			stide_syscall_formatter.service \
 			stide.service \
-      			BoSC.service \
+      			bosc.service \
       			influx_adapter.service"
 
 SYSTEMD_AUTO_ENABLE_${PN} = "disable"
