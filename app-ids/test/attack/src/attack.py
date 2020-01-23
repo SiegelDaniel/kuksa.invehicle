@@ -11,7 +11,7 @@ class Attack(object):
         self.client.on_connect = self.on_connect
         self.client.on_message = self.on_message
 
-        self.client.connect("test.mosquitto.org")
+        self.client.connect("localhost")
         self.client.loop_forever()
 
     def poll_heise(self):
