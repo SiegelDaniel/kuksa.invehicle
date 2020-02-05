@@ -10,7 +10,7 @@
     "syscall_tracer": {
       "BROKER_IP": "test.mosquitto.org",
       "PID": 1,
-      "PNAME": "",
+      "PNAMES": [ "python", "attack" ],
       "QOS": 1
     },
     "stide_syscall_formatter": {

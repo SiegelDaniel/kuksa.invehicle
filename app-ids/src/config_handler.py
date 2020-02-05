@@ -30,6 +30,6 @@ class config_loader(Singleton):
             return None
 
     def get_config_point(self,configpoint,config):
-        """Extracts a certain config point (as string) from the configuration dictionary"""
+        """Extracts a certain config point from the configuration dictionary"""
         if configpoint in config:
             return config[configpoint]

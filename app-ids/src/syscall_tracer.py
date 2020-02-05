@@ -29,13 +29,13 @@ import config_handler
 
 class SyscallTracer(object):
 
-    def __init__(self,PID,PNAME="",BROKER_IP="test.mosquitto.org"):
+    def __init__(self):
 
         self.cfg_handler = config_handler.config_loader("./config.json")
         self.config      = self.cfg_handler.get_config("SYSCALL_TRACER")
 
         self.PID        = self.cfg_handler.get_config_point("PID",self.config)
-        self.PNAME      = self.cfg_handler.get_config_point("PNAME",self.config)
+        self.PNAMES      = self.cfg_handler.get_config_point("PNAMES",self.config)
         self.BROKER_IP  = self.cfg_handler.get_config_point("BROKER_IP",self.config)
         self.QOS        = self.cfg_handler.get_config_point("QOS",self.config)
 
@@ -47,14 +47,10 @@ class SyscallTracer(object):
             print("Connection to MQTT broker failed.")
             raise SystemExit(0)
 
-        if self.PID != "" and self.PNAME == "":
+        if self.PID != "" and self.PNAMES == "":
             print("Tracing by PID")
             self.trace_by_pid()
-            try:
-                self.PNAME = self.get_process_name(self.PID)
-            except Exception:
-                print("PNAME assertion failed.")
-        elif self.PID == "" and self.PNAME != "":
+        elif self.PID == "" and self.PNAMES != "":
             self.trace_by_process()
         else:
             print("No PNAME or PID found")
@@ -63,10 +59,14 @@ class SyscallTracer(object):
         self.client.loop_start()
 
     def find_pids(self):
+        """Given a list of keywords for process identification, searches running processes for these exact keywords
+        If multiple matches are found, the first one is returned"""
         import os
         process_ids = []
         try:
-            process_ids =  [proc.pid for proc in psutil.process_iter() if proc.name() == self.PNAME]
+            for proc in psutil.process_iter():#iterate through all processes
+               if all(pname in proc.cmdline() for pname in self.PNAMES):#if all of our tags match the cmdline, add the pid
+                    process_ids.append(proc.pid)
         except:
             print("Process resolution failed.")
             raise SystemExit(0)
@@ -77,7 +77,7 @@ class SyscallTracer(object):
 
     
     def trace_by_pid(self):
-
+        """Unbuffered python wrapper for strace, refer to the documentation to understand design choices."""
         proc = Popen(['stdbuf', '-oL', 'strace', '-p',str(self.PID), '-tt'],
                     bufsize=1, stdout=PIPE, stderr=STDOUT, close_fds=True)
         for line in iter(proc.stdout.readline, b''):
@@ -102,7 +102,7 @@ class SyscallTracer(object):
         datadict = {
             'timestamp' : date_string,
             'data' : trace,
-            'processname': self.PNAME
+            'processname': "".join(self.PNAMES)
         }
 
         self.client.publish('TRACED',simplejson.dumps(datadict),qos=self.QOS)
@@ -120,4 +120,4 @@ class SyscallTracer(object):
             return self.config["key"]
 
 if __name__ == "__main__":
-    Tracer = SyscallTracer("1","","test.mosquitto.org")
+    Tracer = SyscallTracer()
