@@ -1,8 +1,51 @@
-# The config.xml
+# The config.json
 
-<<<<<<< HEAD
-As depicted in our architecture overview below, the config.xml is the central point to store configuration options for the App-IDS modules. If you want to deploy the modules in a distributed manner, you have to ensure that there a exists a version of config.xml on each device/system. More on this can be found under [Known Limitations and Next Steps](Limitations.md).
+As of version 2.0, the configuration now consists of a single JSON file that should be consistent across all of the deployed modules.
+As we've currently only tested deployment on a single machine there were obviously no consistency issues.
 
-![App-IDS Architecture Overview](figures/App-IDS_Architecture_BlockDiagram.jpg)
+![alt text](./figures/architecture.png)
 
-At the time of writing, the xml schema for the config.xml can be found [here](../src/xml_validation/configuration_file.xsd). We assume that the xsd is self-explanatory. Examples for valid config.xml files are our [sample file](../src/config.xml) and the examples in our Quick Start Guides ([here](QuickStart_Kuksa.md) and [here](QuickStart_Ubuntu.md)).
+An example config could look as follows:
+
+```
+{
+    "stide": {
+      "DB_USER": "",
+      "DB_PW": "",
+      "DB_HOST": "../Traces.sqlite",
+      "BROKER_IP": "test.mosquitto.org",
+      "STORAGE_MODE": "True",
+      "WINDOW_SIZE": 3
+    },
+    "syscall_tracer": {
+      "BROKER_IP": "test.mosquitto.org",
+      "PID": 1,
+      "PNAMES": [ "python", "attack" ],
+      "QOS": 1
+    },
+    "stide_syscall_formatter": {
+      "BROKER_IP": "test.mosquitto.org"
+    },
+    "BOSC": {
+      "DB_USER": "",
+      "DB_PW": "",
+      "DB_HOST": "../Traces.sqlite",
+      "BROKER_IP": "test.mosquitto.org",
+      "LEARNING_MODE": "True",
+      "WINDOW_SIZE": 3
+    },
+    "influx_adapter": {
+      "BROKER_IP": "test.mosquitto.org",
+      "INFLUX_HOST": "",
+      "INFLUX_PORT": "",
+      "INFLUX_MSRMNT": ""
+    },
+    "create_LUT": {
+      "BROKER_IP": "test.mosquitto.org"
+    }
+  }
+```
+
+Note that each module has its own, separate block of configuration keys and requires to be configured individually.  
+The configuration keys "DB_USER" and "DB_PW" are meant to be used with the SQLite database if it requires user authentication of some sort.  
+The SQLite and Influx databases might as well be deployed somewhere online but we assume you use local installations of each one for performance reasons. 
