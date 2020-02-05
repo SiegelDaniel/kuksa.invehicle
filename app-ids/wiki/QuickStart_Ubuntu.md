@@ -18,14 +18,42 @@ The following steps are very similar to the steps described in the [Quick Start 
 ## Filling the database
 Edit the config.xml to look as follows
 ```
-<CONFIG>
-<PNAME>firefox</PNAME>
-<WINDOW_SIZE>3</WINDOW_SIZE>
-<DB_HOST>../Traces.sqlite</DB_HOST>
-<BROKER_IP>localhost</BROKER_IP>
-<STORAGE_MODE>True</STORAGE_MODE>
-<LOGGINGLEVEL>CRITICAL</LOGGINGLEVEL>
-</CONFIG>
+{
+    "stide": {
+      "DB_USER": "",
+      "DB_PW": "",
+      "DB_HOST": "../Traces.sqlite",
+      "BROKER_IP": "localhost",
+      "STORAGE_MODE": "True",
+      "WINDOW_SIZE": 3
+    },
+    "syscall_tracer": {
+      "BROKER_IP": "localhost",
+      "PID": ,
+      "PNAMES": ["firefox"],
+      "QOS": 1
+    },
+    "stide_syscall_formatter": {
+      "BROKER_IP": "localhost"
+    },
+    "BOSC": {
+      "DB_USER": "",
+      "DB_PW": "",
+      "DB_HOST": "../Traces.sqlite",
+      "BROKER_IP": "localhost",
+      "LEARNING_MODE": "True",
+      "WINDOW_SIZE": 3
+    },
+    "influx_adapter": {
+      "BROKER_IP": "localhost",
+      "INFLUX_HOST": "",
+      "INFLUX_PORT": "",
+      "INFLUX_MSRMNT": ""
+    },
+    "create_LUT": {
+      "BROKER_IP": "localhost"
+    }
+  }
 ``` 
 Start Firefox ;)
 
@@ -42,7 +70,8 @@ sudo python3 syscall_tracer.py
 
 After some time terminate all scripts via `SIGINT` (`control + c`).
 
-Please note that, depending on your ```LOGGINGLEVEL```, the ```syscall_tracer``` will inform you that it found multiple processes matching the processname ```firefox```. In this case, the ```syscall_tracer``` monitors the first of those processes, which should be the parent process. The current version of App-IDS is restricted to monitor a single process which is one of the [known limitations](Limitations.md).
+Please note that there is a possibillity for multiple firefox processes to run simulatenously. 
+In this case, the ```syscall_tracer``` monitors the first of those processes, which should be the parent process. The current version of App-IDS is restricted to monitor a single process which is one of the [known limitations](Limitations.md).
 
 ## Detecting anomalies
 Start a fourth shell and subscribe to the `ANOMALY` topic.
@@ -51,13 +80,40 @@ mosquitto_sub -h localhost -t "ANOMALY"
 ```
 Edit the config.xml to look as follows:
  ```
-<CONFIG>
-<PNAME>firefox</PNAME>
-<WINDOW_SIZE>3</WINDOW_SIZE>
-<DB_HOST>../Traces.sqlite</DB_HOST>
-<BROKER_IP>localhost</BROKER_IP>
-<STORAGE_MODE>False</STORAGE_MODE>
-<LOGGINGLEVEL>CRITICAL</LOGGINGLEVEL>
-</CONFIG>
-``` 
+{
+    "stide": {
+      "DB_USER": "",
+      "DB_PW": "",
+      "DB_HOST": "../Traces.sqlite",
+      "BROKER_IP": "test.mosquitto.org",
+      "STORAGE_MODE": "False",
+      "WINDOW_SIZE": 3
+    },
+    "syscall_tracer": {
+      "BROKER_IP": "test.mosquitto.org",
+      "PID": 1,
+      "PNAMES": [ "python", "attack" ],
+      "QOS": 1
+    },
+    "stide_syscall_formatter": {
+      "BROKER_IP": "test.mosquitto.org"
+    },
+    "BOSC": {
+      "DB_USER": "",
+      "DB_PW": "",
+      "DB_HOST": "../Traces.sqlite",
+      "BROKER_IP": "test.mosquitto.org",
+      "LEARNING_MODE": "False",
+      "WINDOW_SIZE": 3
+    },
+    "influx_adapter": {
+      "BROKER_IP": "test.mosquitto.org",
+      "INFLUX_HOST": "",
+      "INFLUX_PORT": "",
+      "INFLUX_MSRMNT": ""
+    },
+    "create_LUT": {
+      "BROKER_IP": "test.mosquitto.org"
+    }
+  }
 Restart the python scripts as above.

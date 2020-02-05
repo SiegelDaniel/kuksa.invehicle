@@ -9,24 +9,42 @@ App-IDS is part of the Kuksa Layer for yocto. Following the instructions for [ag
 Configuration of App-IDS is done via a central configuration file. You can ssh to your Raspberry and update the configuration file using, e.g., ```vi```
 
  ```
- vi /usr/bin/app-ids/src/config.xml
+ vi /usr/bin/app-ids/src/config.json
  ```
 
-To monitor the HomeScreen your ```config.xml``` should look as follows:
+To monitor the HomeScreen your ```config.json``` should contain the following part:
 ```
-<CONFIG>
-<PNAME>HomeScreen</PNAME>
-<WINDOW_SIZE>3</WINDOW_SIZE>
-<DB_HOST>../Traces.sqlite</DB_HOST>
-<BROKER_IP>localhost</BROKER_IP>
-<STORAGE_MODE>True</STORAGE_MODE>
-<LOGGINGLEVEL>CRITICAL</LOGGINGLEVEL>
-</CONFIG>
+{
+    "stide": {
+      "DB_USER": "",
+      "DB_PW": "",
+      "DB_HOST": "../Traces.sqlite",
+      "BROKER_IP": "localhost",
+      "STORAGE_MODE": "True",
+      "WINDOW_SIZE": 3
+    },
+    "syscall_tracer": {
+      "BROKER_IP": "localhost",
+      "PID": ,
+      "PNAMES": ["HomeScreen"],
+      "QOS": 1
+    },
+    "stide_syscall_formatter": {
+      "BROKER_IP": "localhost"
+    },
+    "influx_adapter": {
+      "BROKER_IP": "localhost",
+      "INFLUX_HOST": "",
+      "INFLUX_PORT": "",
+      "INFLUX_MSRMNT": ""
+    }
+  }
 ``` 
-In comparison to the sample `config.xml` we defined HomeScreen as the name of the process we want to monitor. The remaining relevant fields for this quick start guide are:
+In comparison to the sample `config.json` we defined HomeScreen as the name of the process we want to monitor. The remaining relevant fields for this quick start guide are:
 - `WINDOW_SIZE` is the size of the system call windows used by STIDE
 - `DB_HOST` is the location of the sqlite database file
-- `BROKER_IP` the ip of the mqtt broker. As the image is build with mosquitto, localhost works just fine here.
+- `BROKER_IP` the ip of the mqtt broker. As the image is build with mosquitto, localhost works just fine here. 
+	**Note that this mechanism also works when the traced application is ran from within docker when a few prerequisites are met**
 - `STORAGE_MODE` 
 	- `True` indicates that we want to fill the database with system call sequences representing benign behavior
 	- `False` indicates that we want to compare monitored systems calls with the database to find anomalies
@@ -47,16 +65,33 @@ Detected anomalies are published on the `ANOMALY` mqtt topic. So, it is a good i
 mosquitto_sub -h <ip_of_your_raspberry> -t "ANOMALY"
 ```
 
-Now, we have to configure the **stide** module to detect anomalies. Thus, `config.xml` should look as follows:
+Now, we have to configure the **stide** module to detect anomalies. Thus, `config.json` should look as follows:
  ```
-<CONFIG>
-<PNAME>HomeScreen</PNAME>
-<WINDOW_SIZE>3</WINDOW_SIZE>
-<DB_HOST>../Traces.sqlite</DB_HOST>
-<BROKER_IP>localhost</BROKER_IP>
-<STORAGE_MODE>False</STORAGE_MODE>
-<LOGGINGLEVEL>CRITICAL</LOGGINGLEVEL>
-</CONFIG>
+{
+    "stide": {
+      "DB_USER": "",
+      "DB_PW": "",
+      "DB_HOST": "../Traces.sqlite",
+      "BROKER_IP": "localhost",
+      "STORAGE_MODE": "True",
+      "WINDOW_SIZE": 3
+    },
+    "syscall_tracer": {
+      "BROKER_IP": "localhost",
+      "PID": 1,
+      "PNAMES": ["HomeScreen"],
+      "QOS": 1
+    },
+    "stide_syscall_formatter": {
+      "BROKER_IP": "localhost"
+    },
+    "influx_adapter": {
+      "BROKER_IP": "localhost",
+      "INFLUX_HOST": "",
+      "INFLUX_PORT": "",
+      "INFLUX_MSRMNT": ""
+	}
+  }
 ``` 
 
 Then, restart the service:
