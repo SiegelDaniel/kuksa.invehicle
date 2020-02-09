@@ -30,8 +30,10 @@ class InfluxAdapter():
         self.config      = self.cfg_handler.get_config("INFLUX_ADAPTER")
 
         self.BROKER_IP   = self.cfg_handler.get_config_point("BROKER_IP",self.config)
+        self.DB_IP       = self.cfg_handler.get_config_point("INFLUX_HOST",self.config)
+        self.DB_PORT     = self.cfg_handler.get_config_point("INFLUX_PORT",self.config)
         #CONFIG
-        self.client = InfluxDBClient(host='68.183.66.50',port=8086)
+        self.client = InfluxDBClient(host=self.DB_IP,port=self.DB_PORT)
         self.client.switch_database('Traces')
 
         self.mqtt_client = mqtt.Client()

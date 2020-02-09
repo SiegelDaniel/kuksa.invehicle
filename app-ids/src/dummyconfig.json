@@ -26,8 +26,8 @@
     },
     "influx_adapter": {
       "BROKER_IP": "test.mosquitto.org",
-      "INFLUX_HOST": "",
-      "INFLUX_PORT": "",
+      "INFLUX_HOST": "127.0.0.1",
+      "INFLUX_PORT": "8086",
       "INFLUX_MSRMNT": ""
     },
     "create_LUT": {
