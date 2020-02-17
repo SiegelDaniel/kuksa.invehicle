@@ -5,7 +5,7 @@ In this Quick Start Guide we will monitor the Firefox parent process on Ubuntu 1
 We tested App-IDS with python3.5. However, it should also work with newer versions. Thus, install python, strace, mosquitto, and mosquitto-clients.
 ```
 sudo apt update
-sudo apt install python3.5 strace mosquitto mosquitto-clients
+sudo apt install python3.5 strace mosquitto mosquitto-client<s
 ```
 Reboot or start the mosquitto service unit manually.
 Navigate to the root directory of App-IDS and execute
@@ -16,7 +16,7 @@ to install the required python modules. A complete list with links to the module
 The following steps are very similar to the steps described in the [Quick Start Guide for Kuksa](QuickStart_Kuksa.md). Thus, we keep the descriptions brief.
 
 ## Filling the database
-Edit the config.xml to look as follows
+Edit the config.json to look as follows
 ```
 {
     "stide": {
