@@ -117,6 +117,8 @@ systemctl stop stide
 
 ```
 
+These services are located in ```/lib/systemd/system ```.  
+
 to stop the services and finish filling your database.
 
   In order to use BoSC, you will also need to train the BoSC module. 
