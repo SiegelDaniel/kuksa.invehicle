@@ -18,10 +18,8 @@
 #https://www.python.org/dev/peps/pep-0008/
 import paho.mqtt.client as mqtt
 from subprocess import Popen, PIPE, STDOUT
-import lxml
 import threading
 from datetime import datetime
-import rfc3339
 import simplejson
 import psutil
 import config_handler
@@ -52,6 +50,9 @@ class SyscallTracer(object):
             self.trace_by_pid()
         elif self.PID == "" and self.PNAMES != "":
             self.trace_by_process()
+            #PNAMES are preferred if both are provided
+        elif self.PID != "" and self.PNAMES != "":
+            self.trace_by_process()
         else:
             print("No PNAME or PID found")
             raise SystemExit(1)
@@ -65,7 +66,7 @@ class SyscallTracer(object):
         process_ids = []
         try:
             for proc in psutil.process_iter():#iterate through all processes
-               if all(pname in proc.cmdline() for pname in self.PNAMES):#if all of our tags match the cmdline, add the pid
+               if all(pname in proc.cmdline() for pname in self.PNAMES):#if ALL of our tags match the cmdline, add the pid
                     process_ids.append(proc.pid)
         except:
             print("Process resolution failed.")
@@ -98,13 +99,10 @@ class SyscallTracer(object):
 
     def send_trace(self,trace):
         print("Sending trace {0}".format(trace))
-        date_string = rfc3339.rfc3339(datetime.now())
         datadict = {
-            'timestamp' : date_string,
             'data' : trace,
             'processname': "".join(self.PNAMES)
         }
-
         self.client.publish('TRACED',simplejson.dumps(datadict),qos=self.QOS)
 
     def load_config(self,JSON_PATH):

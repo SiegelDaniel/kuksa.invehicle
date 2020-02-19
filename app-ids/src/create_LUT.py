@@ -25,7 +25,7 @@ class LUTCreator(object):
 
         #CONFIG
         self.cfg_handler = config_handler.config_loader("./config.json")
-        self.config      = self.cfg_handler.get_config("LUTCREATOR")
+        self.config      = self.cfg_handler.get_config("CREATE_LUT")
 
         self.BROKER_IP = self.cfg_handler.get_config_point("BROKER_IP",self.config)
         #CONFIG END

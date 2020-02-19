@@ -9,7 +9,7 @@ class Singleton(object):
 
 class config_loader(Singleton):
     
-    def __init__(self,JSON_PATH):
+    def __init__(self):
         self.__config = self.__load_config("./")
 
     def __load_config(self,JSON_PATH):

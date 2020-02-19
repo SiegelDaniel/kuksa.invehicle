@@ -1,5 +1,5 @@
 {
-    "stide": {
+    "STIDE": {
       "DB_USER": "",
       "DB_PW": "",
       "DB_HOST": "../Traces.sqlite",
@@ -7,13 +7,13 @@
       "STORAGE_MODE": "True",
       "WINDOW_SIZE": 3
     },
-    "syscall_tracer": {
+    "SYSCALL_TRACER": {
       "BROKER_IP": "test.mosquitto.org",
       "PID": 1,
       "PNAMES": [ "python", "attack" ],
       "QOS": 1
     },
-    "stide_syscall_formatter": {
+    "STIDE_SYSCALL_FORMATTER": {
       "BROKER_IP": "test.mosquitto.org"
     },
     "BOSC": {
@@ -24,13 +24,13 @@
       "LEARNING_MODE": "True",
       "WINDOW_SIZE": 3
     },
-    "influx_adapter": {
+    "INFLUX_ADAPTER": {
       "BROKER_IP": "test.mosquitto.org",
       "INFLUX_HOST": "127.0.0.1",
       "INFLUX_PORT": "8086",
       "INFLUX_MSRMNT": ""
     },
-    "create_LUT": {
+    "CREATE_LUT": {
       "BROKER_IP": "test.mosquitto.org"
     }
   }
