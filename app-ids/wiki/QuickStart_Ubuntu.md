@@ -85,35 +85,35 @@ Edit the config.xml to look as follows:
       "DB_USER": "",
       "DB_PW": "",
       "DB_HOST": "../Traces.sqlite",
-      "BROKER_IP": "test.mosquitto.org",
+      "BROKER_IP": "localhost",
       "STORAGE_MODE": "False",
       "WINDOW_SIZE": 3
     },
     "syscall_tracer": {
-      "BROKER_IP": "test.mosquitto.org",
+      "BROKER_IP": "localhost",
       "PID": 1,
       "PNAMES": [ "python", "attack" ],
       "QOS": 1
     },
     "stide_syscall_formatter": {
-      "BROKER_IP": "test.mosquitto.org"
+      "BROKER_IP": "localhost"
     },
     "BOSC": {
       "DB_USER": "",
       "DB_PW": "",
       "DB_HOST": "../Traces.sqlite",
-      "BROKER_IP": "test.mosquitto.org",
+      "BROKER_IP": "localhost",
       "LEARNING_MODE": "False",
       "WINDOW_SIZE": 3
     },
     "influx_adapter": {
-      "BROKER_IP": "test.mosquitto.org",
+      "BROKER_IP": "localhost",
       "INFLUX_HOST": "",
       "INFLUX_PORT": "",
       "INFLUX_MSRMNT": ""
     },
     "create_LUT": {
-      "BROKER_IP": "test.mosquitto.org"
+      "BROKER_IP": "localhost"
     }
   }
 Restart the python scripts as above.

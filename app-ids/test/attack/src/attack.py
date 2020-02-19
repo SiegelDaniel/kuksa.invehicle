@@ -1,7 +1,7 @@
-import requests
 import threading
 import paho.mqtt.client as mqtt
 import time
+import os
 
 class Attack(object):
 
@@ -14,14 +14,14 @@ class Attack(object):
         self.client.connect("localhost")
         self.client.loop_forever()
 
-    def poll_heise(self):
+    def ping_self(self):
         while(True):
             time.sleep(2)
-            r = requests.get('https://heise.de')
+            os.system("ping -c 1 localhost")
 
     def on_connect(self,client, userdata, flags, msg):
         self.client.subscribe("ATTACK")
-        thread = threading.Thread(target=self.poll_heise)
+        thread = threading.Thread(target=self.ping_self)
         thread.start()
     
     def on_message(self,client, userdata, msg):
