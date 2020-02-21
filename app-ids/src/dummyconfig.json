@@ -3,34 +3,34 @@
       "DB_USER": "",
       "DB_PW": "",
       "DB_HOST": "../Traces.sqlite",
-      "BROKER_IP": "test.mosquitto.org",
+      "BROKER_IP": "localhost",
       "STORAGE_MODE": "True",
       "WINDOW_SIZE": 3
     },
     "SYSCALL_TRACER": {
-      "BROKER_IP": "test.mosquitto.org",
+      "BROKER_IP": "localhost",
       "PID": 1,
       "PNAMES": [ "python", "attack" ],
       "QOS": 1
     },
     "STIDE_SYSCALL_FORMATTER": {
-      "BROKER_IP": "test.mosquitto.org"
+      "BROKER_IP": "localhost"
     },
     "BOSC": {
       "DB_USER": "",
       "DB_PW": "",
       "DB_HOST": "../Traces.sqlite",
-      "BROKER_IP": "test.mosquitto.org",
+      "BROKER_IP": "localhost",
       "LEARNING_MODE": "True",
       "WINDOW_SIZE": 3
     },
     "INFLUX_ADAPTER": {
-      "BROKER_IP": "test.mosquitto.org",
+      "BROKER_IP": "localhost",
       "INFLUX_HOST": "127.0.0.1",
       "INFLUX_PORT": "8086",
       "INFLUX_MSRMNT": ""
     },
     "CREATE_LUT": {
-      "BROKER_IP": "test.mosquitto.org"
+      "BROKER_IP": "localhost"
     }
   }
