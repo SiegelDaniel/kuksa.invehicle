@@ -66,8 +66,11 @@ class SyscallTracer(object):
         process_ids = []
         try:
             for proc in psutil.process_iter():#iterate through all processes
-               if all(pname in proc.cmdline() for pname in self.PNAMES):#if ALL of our tags match the cmdline, add the pid
-                    process_ids.append(proc.pid)
+               for cmdline in proc.cmdline():
+                    for name in self.PNAMES:
+                        if name in cmdline:
+                            process_ids.append(proc.pid)
+                            print("Found {0}".format(name))
         except:
             print("Process resolution failed.")
             raise SystemExit(0)
