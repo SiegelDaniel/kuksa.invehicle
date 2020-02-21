@@ -4,13 +4,13 @@ class Singleton(object):
     _instance = None
     def __new__(class_, *args, **kwargs):
         if not isinstance(class_._instance, class_):
-            class_._instance = object.__new__(class_, *args, **kwargs)
+            class_._instance = object.__new__(class_)
         return class_._instance
 
 class config_loader(Singleton):
     
-    def __init__(self):
-        self.__config = self.__load_config("./")
+    def __init__(self,JSON_PATH="./config.json"):
+        self.__config = self.__load_config("./config.json")
 
     def __load_config(self,JSON_PATH):
         """Loads config from a given JSON file, extracts the relevant config parameters"""
