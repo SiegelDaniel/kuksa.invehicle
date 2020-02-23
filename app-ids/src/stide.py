@@ -169,7 +169,7 @@ class STIDE(object):
             self.call_list.append(data)
         else:
             if self.DB_CONNECTION is not None:
-                if self.STORAGE_MODE == True:
+                if self.STORAGE_MODE == "True":
                     self.insert(processname,self.call_list)
                     self.call_list = self.call_list[1:]
                 else:
