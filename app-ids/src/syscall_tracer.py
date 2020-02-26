@@ -106,7 +106,8 @@ class SyscallTracer(object):
             'data' : trace,
             'processname': "".join(self.PNAMES)
         }
-        self.client.publish('TRACED',simplejson.dumps(datadict),qos=self.QOS)
+	data = simplejson.dumps(datadict)
+        self.client.publish('TRACED',data,qos=self.QOS)
 
     def load_config(self,JSON_PATH):
         """Loads config from a given JSON file, extracts the relevant config parameters"""
