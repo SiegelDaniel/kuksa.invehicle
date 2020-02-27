@@ -53,7 +53,7 @@ class SyscallFormatter(object):
         """MQTT Callback function for handling received messages"""
         decoded_msg = ""
         try:
-            #payload is bytes array, decode using utf-8
+            #payload is bytes array instead of string, decode to string using utf-8
             decoded_msg  = str(msg.payload,'utf-8')
             datadict = json.loads(decoded_msg)
 
@@ -72,9 +72,10 @@ class SyscallFormatter(object):
         self.client.subscribe("TRACED") 
 
     def parse(self,data):
-        print("New message")
+        print("Received message:")
         split_msg = data.split("(", 1)[0]
         split_msg = split_msg.split(" ",1)[1]
+        print(split_msg)
         return split_msg
 
     def publish(self,topic,data):
